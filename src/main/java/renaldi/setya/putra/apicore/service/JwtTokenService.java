@@ -13,10 +13,9 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
-import static renaldi.setya.putra.apicore.constant.ClaimConstant.*;
+import static renaldi.setya.putra.apicore.constant.ClaimEnum.*;
 import static renaldi.setya.putra.apicore.constant.ErrorCodeConstant.*;
 import static renaldi.setya.putra.apicore.constant.ExceptionConstant.*;
 import static renaldi.setya.putra.apicore.constant.MessageConstant.*;
@@ -81,6 +80,7 @@ public class JwtTokenService {
             return ClaimDto.builder()
                     .username(claims.getSubject())
                     .userProfileId(claims.get(USER_PROFILE_ID.getKey(), Long.class))
+                    .cif(claims.get(CIF.getKey(), String.class))
                     .name(claims.get(NAME.getKey(), String.class))
                     .email(claims.get(EMAIL.getKey(), String.class))
                     .phoneNumber(claims.get(PHONE_NUMBER.getKey(), String.class))
@@ -88,7 +88,7 @@ public class JwtTokenService {
         } catch (ExpiredJwtException ex) {
             throw new ProcessException(UNAUTHORIZE_CODE, DEFAULT_SOURCE_SYSTEM, UNAUTHORIZE_ID_MESSAGE, UNAUTHORIZE_EN_MESSAGE);
         } catch (JwtException ex) {
-            throw new ProcessException(UNAUTHORIZE_CODE, DEFAULT_SOURCE_SYSTEM, INVALID_TOKEN_ID_MESSAGE, INVALID_TOKEN_EN_MESSAGE);
+            throw new ProcessException(INVALID_TOKEN_CODE, DEFAULT_SOURCE_SYSTEM, INVALID_TOKEN_ID_MESSAGE, INVALID_TOKEN_EN_MESSAGE);
         } catch (Exception e) {
             return null;
         }

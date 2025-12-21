@@ -5,8 +5,9 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum ClaimConstant {
+public enum ClaimEnum {
     USER_PROFILE_ID("userProfileId"),
+    CIF("cif"),
     USERNAME("username"),
     NAME("name"),
     EMAIL("email"),
